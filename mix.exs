@@ -21,8 +21,8 @@ defmodule Bavlahi.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:google_api_you_tube, "~> 0.0.1"},
-      {:goth, "~> 0.6.0"}
+      {:google_api_you_tube, "~> 0.1.0"},
+      {:goth, "~> 0.10.0"}
     ]
   end
 end
