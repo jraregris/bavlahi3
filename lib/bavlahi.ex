@@ -47,4 +47,16 @@ defmodule Bavlahi do
       [playlistitem] -> playlistitem.contentDetails.videoId
     end
   end
+
+  def youtube_id_to_video_url(video_id) do
+    "https://www.youtube.com/watch?v=" <> video_id
+  end
+
+  @doc """
+  Prepend string with url-prefix that results in an embed url
+  """
+  @spec youtube_id_to_embed_url(String.t()) :: String.t()
+  def youtube_id_to_embed_url(video_id) do
+    "https://www.youtube.com/embed/" <> video_id
+  end
 end
