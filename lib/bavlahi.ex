@@ -3,19 +3,6 @@ defmodule Bavlahi do
   Documentation for Bavlahi.
   """
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Bavlahi.hello
-      :world
-
-  """
-  def hello do
-    :world
-  end
-
   def get_connection do
     {:ok, token} = Goth.Token.for_scope("https://www.googleapis.com/auth/youtube")
     GoogleApi.YouTube.V3.Connection.new(token.token)
