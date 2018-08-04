@@ -31,33 +31,7 @@ defmodule Bavlahi do
       )
 
     case playlistitem_list.items do
-      [playlistitem] -> playlistitem.contentDetails.videoId
+      [playlistitem] -> %Video{id: playlistitem.contentDetails.videoId}
     end
-  end
-
-  @doc ~S"""
-  Prepend string with url-prefix that results in a video url
-
-  ## Examples
-
-    iex> Bavlahi.youtube_id_to_embed_url("RQGa0DPwes0")
-    "https://www.youtube.com/embed/RQGa0DPwes0"
-  """
-  @spec youtube_id_to_video_url(String.t()) :: String.t()
-  def youtube_id_to_video_url(video_id) do
-    "https://www.youtube.com/watch?v=" <> video_id
-  end
-
-  @doc ~S"""
-  Prepend string with url-prefix that results in an embed url
-
-  ## Examples
-
-    iex> Bavlahi.youtube_id_to_embed_url("RQGa0DPwes0")
-    "https://www.youtube.com/embed/RQGa0DPwes0"
-  """
-  @spec youtube_id_to_embed_url(String.t()) :: String.t()
-  def youtube_id_to_embed_url(video_id) do
-    "https://www.youtube.com/embed/" <> video_id
   end
 end
