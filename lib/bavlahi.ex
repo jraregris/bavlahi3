@@ -18,11 +18,7 @@ defmodule Bavlahi do
         id: channel_id
       )
 
-    uploads_id =
-      case channels_list.items do
-        [channel] ->
-          channel.contentDetails.relatedPlaylists.uploads
-      end
+    uploads_id = get_uploads_playlist_from_only_channel_in_channel_list(channels_list)
 
     playlistitem_list = get_playlistitems_by_id(conn, uploads_id)
 
@@ -41,5 +37,12 @@ defmodule Bavlahi do
       )
 
     playlistitem_list
+  end
+
+  defp get_uploads_playlist_from_only_channel_in_channel_list(channels_list) do
+    case channels_list.items do
+      [channel] ->
+        channel.contentDetails.relatedPlaylists.uploads
+    end
   end
 end
