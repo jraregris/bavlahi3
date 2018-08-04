@@ -12,9 +12,9 @@ defmodule Bavlahi do
         id: channel_id
       )
 
-    uploads_id = get_uploads_playlist_from_only_channel_in_channel_list(channels_list)
-
-    playlistitem_list = get_playlistitems_by_id(uploads_id)
+    playlistitem_list =
+      get_uploads_playlist_from_only_channel_in_channel_list(channels_list)
+      |> get_playlistitems_by_id()
 
     case playlistitem_list.items do
       [playlistitem] -> %Video{id: playlistitem.contentDetails.videoId}

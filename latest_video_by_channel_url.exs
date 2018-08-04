@@ -1,5 +1,7 @@
 [channel_id | _] = System.argv()
 
-Bavlahi.get_latest_video_for_channel(channel_id)
+Channel.from_id(channel_id)
+|> Channel.get_uploads()
+|> Playlist.get_newest()
 |> Video.to_embed_url()
 |> IO.puts()
