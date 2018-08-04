@@ -24,16 +24,22 @@ defmodule Bavlahi do
           channel.contentDetails.relatedPlaylists.uploads
       end
 
-    {:ok, playlistitem_list} =
-      GoogleApi.YouTube.V3.Api.PlaylistItems.youtube_playlist_items_list(
-        conn,
-        "contentDetails",
-        playlistId: uploads_id,
-        maxResults: 1
-      )
+    playlistitem_list = get_playlistitems_by_id(conn, uploads_id)
 
     case playlistitem_list.items do
       [playlistitem] -> %Video{id: playlistitem.contentDetails.videoId}
     end
+  end
+
+  defp get_playlistitems_by_id(conn, playlistId) do
+    {:ok, playlistitem_list} =
+      GoogleApi.YouTube.V3.Api.PlaylistItems.youtube_playlist_items_list(
+        conn,
+        "contentDetails",
+        playlistId: playlistId,
+        maxResults: 1
+      )
+
+    playlistitem_list
   end
 end
