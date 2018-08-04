@@ -3,11 +3,13 @@ defmodule Bavlahi do
   Documentation for Bavlahi.
   """
 
+  @spec get_connection() :: Tesla.Client.t()
   def get_connection do
     {:ok, token} = Goth.Token.for_scope("https://www.googleapis.com/auth/youtube")
     GoogleApi.YouTube.V3.Connection.new(token.token)
   end
 
+  @spec get_latest_video_for_channel(Tesla.Client.t(), String.t()) :: Video.t()
   def get_latest_video_for_channel(conn, channel_id) do
     {:ok, channels_list} =
       GoogleApi.YouTube.V3.Api.Channels.youtube_channels_list(
