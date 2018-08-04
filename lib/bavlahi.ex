@@ -3,34 +3,34 @@ defmodule Bavlahi do
   Documentation for Bavlahi.
   """
 
-  @spec get_connection() :: Tesla.Client.t()
-  def get_connection do
-    {:ok, token} = Goth.Token.for_scope("https://www.googleapis.com/auth/youtube")
-    GoogleApi.YouTube.V3.Connection.new(token.token)
-  end
-
-  @spec get_latest_video_for_channel(Tesla.Client.t(), String.t()) :: Video.t()
-  def get_latest_video_for_channel(conn, channel_id) do
+  @spec get_latest_video_for_channel(String.t()) :: Video.t()
+  def get_latest_video_for_channel(channel_id) do
     {:ok, channels_list} =
       GoogleApi.YouTube.V3.Api.Channels.youtube_channels_list(
-        conn,
+        get_connection(),
         "contentDetails",
         id: channel_id
       )
 
     uploads_id = get_uploads_playlist_from_only_channel_in_channel_list(channels_list)
 
-    playlistitem_list = get_playlistitems_by_id(conn, uploads_id)
+    playlistitem_list = get_playlistitems_by_id(uploads_id)
 
     case playlistitem_list.items do
       [playlistitem] -> %Video{id: playlistitem.contentDetails.videoId}
     end
   end
 
-  defp get_playlistitems_by_id(conn, playlistId) do
+  @spec get_connection() :: Tesla.Client.t()
+  def get_connection do
+    {:ok, token} = Goth.Token.for_scope("https://www.googleapis.com/auth/youtube")
+    GoogleApi.YouTube.V3.Connection.new(token.token)
+  end
+
+  defp get_playlistitems_by_id(playlistId) do
     {:ok, playlistitem_list} =
       GoogleApi.YouTube.V3.Api.PlaylistItems.youtube_playlist_items_list(
-        conn,
+        get_connection(),
         "contentDetails",
         playlistId: playlistId,
         maxResults: 1
